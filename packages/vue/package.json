@@ -1,0 +1,71 @@
+{
+  "name": "@estjs/zero-vue",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@7.28.0",
+  "keywords": [
+    "ui",
+    "vue",
+    "eurus-ui",
+    "ui framework",
+    "component library"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/es/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/lib/index.js"
+    },
+    "./dist/*": "./dist/*"
+  },
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "unpkg": "dist/index.js",
+  "jsdelivr": "dist/index.js",
+  "types": "dist/es/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">= 16"
+  },
+  "scripts": {
+    "dev": " pnpm run gen:version && tsx scripts/build.ts dev",
+    "build": "pnpm run clean && pnpm run gen:version && tsx scripts/build.ts all",
+    "gen:version": "tsx ./scripts/gen-version.ts",
+    "lint": "eslint --cache --fix \"./**/*.{ts,tsx,vue}\"",
+    "build:types": "pnpm run build:types-cjs && pnpm run build:types-esm",
+    "build:types-cjs": "vue-tsc -p ./src/tsconfig.cjs.json --declaration --emitDeclarationOnly",
+    "build:types-esm": "vue-tsc -p ./src/tsconfig.esm.json --declaration --emitDeclarationOnly",
+    "clean": "rimraf dist",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "changelog": "tsx scripts/changelog.ts",
+    "typecheck": "vue-tsc -p ./src/tsconfig.esm.json --noEmit"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.47"
+  },
+  "dependencies": {
+    "async-validator": "^4.2.5"
+  },
+  "devDependencies": {
+    "@estjs/eslint-config": "^0.4.14",
+    "@estjs/tools": "^0.0.32",
+    "@types/node": "^18.15.11",
+    "@vitejs/plugin-vue": "^4.1.0",
+    "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "@vitest/coverage-c8": "^0.29.8",
+    "bumpp": "^9.0.0",
+    "eslint": "^8.37.0",
+    "rimraf": "^4.4.1",
+    "standard-changelog": "^2.0.27",
+    "tsx": "^3.12.6",
+    "typescript": "^5.0.2",
+    "vite": "^4.2.1",
+    "vitest": "^0.29.8",
+    "vue": "^3.2.47",
+    "vue-tsc": "^1.2.0"
+  }
+
+}
