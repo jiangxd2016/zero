@@ -1,0 +1,23 @@
+{
+  "fields": [
+    "propName",
+    "fieldName",
+    "type",
+    "name",
+    "imports",
+    "exports",
+    "updatable",
+    "required",
+    "searchable",
+    "defaultVal",
+    "help",
+    "patterns",
+    "relation",
+    "selectionId",
+    "isArray",
+    "cascades"
+  ],
+  "page": 1,
+  "size": 50
+
+}
