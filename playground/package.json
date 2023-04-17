@@ -28,6 +28,7 @@
     "jsdom": "^21.1.1",
     "typescript": "^5.0.4",
     "unocss": "^0.51.4",
+    "vite-plugin-inspect": "^0.7.22",
     "unplugin-auto-import": "^0.15.3",
     "unplugin-vue-components": "^0.24.1",
     "vite": "^4.1.4",
