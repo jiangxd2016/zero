@@ -36,7 +36,7 @@ export default class CustomAxiosInstance {
     }
   ) {
     this.backendConfig = backendConfig;
-    this.instance = axios.create(axiosConfig);
+    this.instance = request.create(axiosConfig);
     this.setInterceptor();
   }
 
