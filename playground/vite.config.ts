@@ -18,14 +18,8 @@ export default defineConfig({
   },
   plugins: [
     vueJsx(),
-    Vue({
-      reactivityTransform: true,
-    }),
-
-    // https://github.com/hannoeru/vite-plugin-pages
+    Vue(),
     Pages(),
-
-    // https://github.com/antfu/unplugin-auto-import
     AutoImport({
       imports: [
         'vue',
@@ -35,14 +29,10 @@ export default defineConfig({
       ],
       dts: true,
     }),
-
-    // https://github.com/antfu/vite-plugin-components
     Components({
       dts: true,
     }),
     Inspect(),
-    // https://github.com/antfu/unocss
-    // see unocss.config.ts for config
     Unocss(),
   ],
 

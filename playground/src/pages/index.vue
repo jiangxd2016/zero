@@ -1,20 +1,19 @@
 <script setup lang="ts">
 import { ZeroTable } from '@estjs/zero-vue/src/table';
+import { ZeroForm } from '@estjs/zero-vue/src/form';
 
-const name = $ref('');
-
-const router = useRouter();
-const go = () => {
-  if (name) { router.push(`/hi/${encodeURIComponent(name)}`); }
-};
+const flag = ref(false);
 </script>
 
 <template>
-  <ZeroTable>
+  <div class="btn" @click="flag = !flag">change</div>
+  <ZeroTable v-if="flag">
     <template #organization="slotProps">
       <div>
         {{ slotProps.name }}
       </div>
     </template>
   </ZeroTable>
+
+  <ZeroForm v-else />
 </template>

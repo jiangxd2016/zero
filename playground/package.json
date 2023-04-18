@@ -5,6 +5,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite --port 3333 --open",
+    "lint": "eslint --cache --fix \"./src/*.{ts,tsx,js,vue}\"",
     "typecheck": "vue-tsc --noEmit",
     "preview": "vite preview",
     "test": "vitest"

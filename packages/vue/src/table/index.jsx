@@ -1,10 +1,12 @@
 import { defineComponent, onMounted, ref, shallowRef } from 'vue';
-import { Table } from '@arco-design/web-vue';
-
+import { Table, Button, Space } from '@arco-design/web-vue';
+import { ZeroForm } from '../form/index.jsx';
+import { BTN_CONFIG, rowSelection } from './constants.js';
 import '@arco-design/web-vue/dist/arco.css';
 
 export const ZeroTable = defineComponent({
   name: 'ZeroTable',
+  props: Table.props,
   setup(_, { slots }) {
 
     const loading = ref(true);
@@ -18,6 +20,10 @@ export const ZeroTable = defineComponent({
 
     const tableSlots = shallowRef({});
 
+    const btns = ref([]);
+
+    const selections = ref([]);
+
     onMounted( () => {
 
       const model = import.meta.glob('../mock/*.json');
@@ -29,13 +35,16 @@ export const ZeroTable = defineComponent({
           if (key.includes('table')) {
 
             dataList.value = res.default.list;
-            console.log( dataList.value);
 
             pagination.value = {
               total: res.default.total,
               pageSize: res.default.size,
             };
           }
+
+          btns.value = res.default.btns?.map((b)=>{
+            return BTN_CONFIG[b];
+          });
           if (key.includes('resp')) {
 
             filedList.value = res.default.fields;
@@ -73,9 +82,6 @@ export const ZeroTable = defineComponent({
         }
 
       });
-
-      console.log( columns.value );
-
     };
 
     const generateData = () => {
@@ -87,13 +93,30 @@ export const ZeroTable = defineComponent({
 
     };
 
+    const handleSelectionChange = (selection) => {
+      selections.value = selection;
+    };
+
     return () => (
       <div class="">
-        {dataList.value.length}
         {
-          slots.organization({ name: 'test' })
+            <ZeroForm v-else layout="inline" />
         }
-        <Table loading={loading.value} columns={columns.value} data={dataList.value } pagination={pagination.value} v-slots={tableSlots.value}>
+        <Space style={{ width: '100%' }} class="mb-2">
+
+    {
+      btns.value?.map((item) => {
+        return (
+          <Button type={item.type} status={item.status}>
+            {item.text}
+          </Button>
+        );
+      }
+      )
+    }
+        </Space>
+
+        <Table loading={loading.value} row-key="id" row-selection={rowSelection} columns={columns.value} data={dataList.value } onSelectionChange={handleSelectionChange} pagination={pagination.value} v-slots={tableSlots.value}>
         </Table>
       </div>
     );
