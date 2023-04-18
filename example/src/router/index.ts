@@ -1,13 +1,12 @@
 import type { RouteRecordRaw } from 'vue-router';
-import { createWebHashHistory, createRouter, createWebHistory } from 'vue-router';
+import { createWebHashHistory, createRouter } from 'vue-router';
 import NProgress from 'nprogress';
 import MonitorRouter from './modules/monitor';
 import warnRouter from './modules/warn';
 import { WHITE_LIST } from './constants';
-import getTitle from '@/utils/getTitle';
 import { permissionStore, useUserStore } from '@/store';
 
-export const DEFAULT_LAYOUT = () => import('@/layout/default-layout.vue');
+export const DefaultLayout = () => import('@/layout/default-layout.vue');
 
 export const asyncRoutes = [
   MonitorRouter,
@@ -16,44 +15,51 @@ export const asyncRoutes = [
 export const constantRoutes = [
   {
     path: '/login',
-    component: () => import('@/pages/login/index'),
-    hidden: true
+    name: 'login',
+    component: () => import('@/views/login/index.vue'),
+    meta: {
+      requiresAuth: false,
+    },
   },
-
   {
+    name: 'root',
     path: '/',
-    component: DEFAULT_LAYOUT,
-    redirect: '/dashboard',
-    meta: { title: 'dashboard', icon: 'menu-overview', active_icon: 'menu-overview-active', affix: true, hideChildrenInMenu: true },
-    name: 'Dashboard',
-
+    component: DefaultLayout,
     children: [
       {
-        path: 'dashboard',
-        component: () => import('@/pages/overview/index'),
-        name: 'Dashboard',
-
+        path: 'workplace',
+        name: 'workplace',
+        component: () => import('@/views/workplace/index.vue'),
+        meta: {
+          locale: '工作台',
+          requiresAuth: true,
+          icon: 'icon-dashboard',
+          roles: ['*'],
+          order: 0,
+        },
       },
-      {
-        path: 'monitorDetail',
-        component: () => import('@/pages/monitor/detail/detail.vue'),
-        name: 'monitorDetail',
-        meta: { noCache: true, hidden: true }
-      },
-    ]
+    ],
   },
-];
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'notFound',
+    component: () => import('@/views/not-found/index.vue'),
+  },
+]
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: constantRoutes,
+  scrollBehavior() {
+    return { top: 0 };
+  },
 });
 
 router.beforeEach(async (to, from, next) => {
   if (to.path !== from.path) {
     NProgress.start();
   }
-  document.title = getTitle(to.meta.title as string);
+  document.title = to.meta.title as string
 
   const token = useToken.get();
 

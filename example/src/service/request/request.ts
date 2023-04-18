@@ -83,7 +83,7 @@ export function createRequest(axiosConfig: AxiosRequestConfig, backendConfig?: B
    * @param data - 请求的body的data
    * @param config - axios配置
    */
-  function post<T>(url: string, data: any, config?: AxiosRequestConfig) {
+  function post<T>(url: string, data: any = {}, config?: AxiosRequestConfig) {
     return asyncRequest<T>({ url, method: 'post', data, axiosConfig: config });
   }
   /**

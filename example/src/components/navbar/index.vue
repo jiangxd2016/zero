@@ -17,23 +17,6 @@
         </a-tooltip>
       </div>
 
-      <div mr-md flex-center>
-        <a-dropdown trigger="click" @select="setLocale as any">
-          <a-button class="nav-btn" type="outline">
-            <template #icon>
-              <div class="i-carbon-language text-xl" />
-            </template>
-          </a-button>
-          <template #content>
-            <a-doption v-for="item in localesList" :key="item.value" :value="item.value">
-              <template #icon>
-                <icon-check v-show="item.value === currentLocale" />
-              </template>
-              {{ item.label }}
-            </a-doption>
-          </template>
-        </a-dropdown>
-      </div>
       <li>
         <a-dropdown trigger="click">
           <div flex-center>
@@ -45,20 +28,13 @@
           </div>
 
           <template #content>
-            <a-doption>
-              <a-space @click="switchRoles">
-                <icon-tag />
-                <span>
-                  {{ t('navbar.securitySetting') }}
-                </span>
-              </a-space>
-            </a-doption>
+
             <a-doption>
               <a-space @click="lintToDocs">
                 <icon-book />
                 <span>
                   <a href="https://argus.zmops.cn/docs/" target="_blank">
-                    {{ t('navbar.docs') }}
+                   文档
                   </a>
                 </span>
               </a-space>
@@ -68,7 +44,7 @@
               <a-space @click="handleLogout">
                 <icon-export />
                 <span>
-                  {{ t('navbar.logOut') }}
+                  退出
                 </span>
               </a-space>
             </a-doption>
@@ -81,13 +57,11 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { localesList, setLocale } from '@/locales';
 import { useUserStore } from '@/store';
 import { getAlertsSummary } from '@/service/api';
 import { WARN_LEVEL } from '@/utils/constants';
 
 const userStore = useUserStore();
-const currentLocale = getLocale();
 const router = useRouter();
 const { username } = userStore.userInfo;
 

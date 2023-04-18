@@ -36,8 +36,6 @@ export default defineConfig(({ mode, ...args }) => {
       Inspect(),
       Vue(),
       Jsx(),
-
-      // https://github.com/antfu/unplugin-auto-import
       AutoImport({
         include: [
           /\.[jt]sx?$/, // .ts, .tsx, .js, .jsx
@@ -52,15 +50,12 @@ export default defineConfig(({ mode, ...args }) => {
         ],
         dts: true,
         dirs: [
-          './src/composables',
+          './src/hooks',
           './src/stores',
-          './src/locales'
         ],
         vueTemplate: true,
         resolvers: [ArcoResolver()],
       }),
-
-      // https://github.com/antfu/vite-plugin-components
       Components({
         dts: true,
         resolvers: [
@@ -69,8 +64,6 @@ export default defineConfig(({ mode, ...args }) => {
           })
         ]
       }),
-      // https://github.com/antfu/unocss
-      // see unocss.config.ts for config
       UnoCSS(),
 
     ],

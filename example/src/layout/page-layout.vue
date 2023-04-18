@@ -1,5 +1,6 @@
 <template>
   <router-view v-slot="{ Component, route }">
+    <TabBar />
     <transition name="fade" mode="out-in" appear>
       <component
         :is="Component"
@@ -13,3 +14,6 @@
   </router-view>
 </template>
 
+<script lang="ts" setup>
+import TabBar from '@/components/tab-bar/index.vue';
+</script>

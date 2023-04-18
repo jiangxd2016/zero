@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { Message, Modal } from '@arco-design/web-vue';
-import { useToken } from '../../hooks/common/use-token';
+import { useToken } from '@/hooks';
 import { REFRESH_TOKEN_CODE, REQUEST_ERROR_MSG } from './constants';
 
 /** 后端接口返回的数据结构配置 */
@@ -36,7 +36,7 @@ export default class CustomAxiosInstance {
     }
   ) {
     this.backendConfig = backendConfig;
-    this.instance = axios.create(axiosConfig);
+    this.instance = request.create(axiosConfig);
     this.setInterceptor();
   }
 

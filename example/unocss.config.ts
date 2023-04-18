@@ -8,17 +8,7 @@ import {
   transformerVariantGroup,
 } from 'unocss';
 
-const svgList: Record<string, string> = {};
 
-function readSvg() {
-  const svgPath = path.resolve(__dirname, './src/icons/svg');
-  const files = fs.readdirSync(svgPath);
-  files.forEach((file) => {
-    const data = fs.readFileSync(`${svgPath}/${file}`, 'utf8');
-    svgList[file.replace('.svg', '')] = data;
-  });
-}
-readSvg();
 
 export default defineConfig({
   shortcuts: {
@@ -69,12 +59,7 @@ export default defineConfig({
       extraProperties: {
         'display': 'inline-block',
         'vertical-align': 'middle',
-        // ...
       },
-      // i-costom:xxx
-      collections: {
-        custom: svgList
-      }
     }),
   ],
   transformers: [
