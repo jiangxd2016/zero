@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@estjs/eslint-config": "^0.6.7",
+    "@estjs/tools": "^0.1.2",
     "@vitejs/plugin-vue": "^4.1.0",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "bumpp": "^9.1.0",
