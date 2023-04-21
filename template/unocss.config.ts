@@ -1,22 +1,15 @@
-import path from 'node:path';
-import fs from 'node:fs';
 import {
   defineConfig,
-  presetAttributify,
   presetIcons,
   presetUno,
   transformerVariantGroup,
 } from 'unocss';
-
-
 
 export default defineConfig({
   shortcuts: {
     'flex-center': 'flex items-center justify-center',
     'column': 'flex flex-col',
     'flex-s-0': 'flex-shrink-0',
-    'icon-btn': 'inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600',
-
   },
   theme: {
     colors: {
@@ -54,16 +47,12 @@ export default defineConfig({
   },
   presets: [
     presetUno(),
-    presetAttributify(),
     presetIcons({
-      extraProperties: {
-        'display': 'inline-block',
-        'vertical-align': 'middle',
-      },
+      scale: 1.2,
+      warn: true,
     }),
   ],
   transformers: [
     transformerVariantGroup(),
-  ],
-  include: ['./src/**/*.vue', 'src/**/*.ts', 'src/**/*.tsx'].map(dir => path.resolve(__dirname, dir))
+  ]
 });

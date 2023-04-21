@@ -1,6 +1,23 @@
 {
-  "i18n-ally.localesPaths": [
-    "src/locales",
-    "src/locales/lang"
+  "prettier.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "files.associations": {
+    "*.css": "postcss"
+  },
+  "cSpell.userWords": [
+    "esbuild",
+    "esno",
+    "estjs",
+    "iconify",
+    "unocss",
+    "unplugin",
+    "vite",
+    "vitejs",
+    "vitepress",
+    "vitest",
+    "vueuse"
   ]
+  
 }

@@ -4,9 +4,7 @@
   ],
   "rules": {
     "no-unused-vars": 0,
-    "no-console": 0,
-    "@estjs/order": 1,
-    "@estjs/unocss-shorthand":1,
+    "no-console": "off",
     "import/no-named-as-default": 0,
     "@typescript-eslint/no-unused-vars": 0
   }

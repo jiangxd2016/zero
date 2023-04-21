@@ -14,13 +14,12 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictNullChecks": true,
-    "noImplicitAny": false,
-    "checkJs": true,
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "types": [
       "vite/client",
       "vitest/globals",
+      "vite-plugin-pages/client"
     ],
     "paths": {
       "@/*": ["src/*"]
