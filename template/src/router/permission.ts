@@ -8,8 +8,7 @@ async function getAuthRouter() {
   const routerStore =  useRouterStore();
   await routerStore.getAuthRoutes();
 
-
-  console.log(routerStore.getRoutes);
+  return   routerStore.getRoutes;
 
 }
 
@@ -36,7 +35,9 @@ const createRouteGuard = (router: Router) => {
       }
       return;
     }
-    getAuthRouter();
+   const authRouters = await  getAuthRouter();
+
+   router.addRoute(authRouters);
 
     next();
   });

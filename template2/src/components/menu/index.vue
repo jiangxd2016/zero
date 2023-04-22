@@ -21,8 +21,6 @@
 
       const menuTree = computed(() => {
         const copyRouter = JSON.parse(JSON.stringify(menuStore.routeList));
-        console.log({copyRouter});
-
         function travel(_routes: RouteRecordRaw[], layer: number) {
           if (!_routes) return null;
           const collector: any = _routes.map((element) => {
@@ -53,14 +51,10 @@
       const selectedKey = ref<string[]>([]);
       const goto = (item: RouteRecordRaw) => {
 
-        console.log("goto",item);
-
         const actions = item.actions;
 
         (actions||[]).forEach(item=>{
           if(item.code ==="view"){
-            console.log(item.view.archFs);
-
             router.push({
               path:item.view.archFs
             });
@@ -79,9 +73,6 @@
       const renderSubMenu = () => {
         function loopMenu(_route: RouteRecordRaw[]) {
           return _route.map((element) => {
-
-            console.log({element});
-
 
             const icon = element?.meta?.icon ? `<i class="i-carbon-3d-print-mesh"/>` : '';
             if (element.children) {

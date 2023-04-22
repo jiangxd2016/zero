@@ -11,22 +11,23 @@ const ROUTE_TYPE = [
 interface RouteState {
   auth: any[];
   menus: any[];
+  routes: any[];
 }
 
 export const useRouterStore = defineStore('router', {
 
   state: (): RouteState => ({
     auth: [],
-    menus:[],
+    menus: [],
+    routes:[]
   }),
   getters: {
     getRoutes(state) {
 
-      console.log(state.auth);
+
+      console.log(import.meta.glob("../../views/**/*.vue  "));
 
       const menuList: any[] = [];
-
-
       state.auth.forEach((item) => {
         const { pid, visible, id } = item;
         if (!pid && visible) {
@@ -34,35 +35,33 @@ export const useRouterStore = defineStore('router', {
           // TODO: 暂时只支持二级菜单
           let children = state.auth.filter(child => child.pid === id && child.visible);
 
-          const pages = children.filter((child) => {
-            return ROUTE_TYPE.includes(child.type)
-          })
-
-          const other = children.filter((child) => {
-            return !ROUTE_TYPE.includes(child.type)
-          })
 
           // 查找action里面的页面
           children = children.map((child) => {
             const { actions } = child;
-            const viewList = actions.filter((actionItem) => {
-              return actionItem.type === 'view'
-            }).sort((a, b) => {
-              return a.sort - b.sort;
+
+            const pages = actions.filter((child) => {
+              return ROUTE_TYPE.includes(child.type)
             })
-            const firstView = viewList.shift();
-            const otherList = actions.filter((actionItem) => {
-              return actionItem.type !== 'view'
-            }).concat(viewList)
-            if (viewList.length) {
-              child.component =firstView.view.archFs
-              child.mate = {
+
+            const other = actions.filter((child) => {
+              return !ROUTE_TYPE.includes(child.type)
+            })
+
+
+            const viewList = pages.sort((a, b) => {
+              return a.sort - b.sort;
+            }).map(async (actionItem) => {
+
+              actionItem.component =  actionItem.view.archFs
+              actionItem.mate = {
                 ...child.mate,
-                ...firstView,
-                actions: otherList
+                ... child.view,
+                actions: other
               }
-            }
-            return child
+              return actionItem;
+            });
+            return viewList
           });
           menuList.push({
             ...item,

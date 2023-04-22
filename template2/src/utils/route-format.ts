@@ -1,7 +1,5 @@
 export default function formatRoute(routeTree: any) {
 
-  console.log({ routeTree });
-
   const modules0 = import.meta.glob('../views/*/*.vue');
   const modules1 = import.meta.glob('../views/*/*/*.vue');
   const modules2 = import.meta.glob('../views/*/*/*/*.vue');
@@ -28,5 +26,5 @@ export default function formatRoute(routeTree: any) {
 
 function findRouterView(item){
 
-  
+
 }
