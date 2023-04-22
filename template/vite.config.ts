@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { defineConfig } from 'vite';
 import Vue from '@vitejs/plugin-vue';
-import Unocss from 'unocss/vite';
+import UnoCSS from 'unocss/vite';
 import Jsx from '@vitejs/plugin-vue-jsx';
 
 export default defineConfig({
@@ -10,19 +10,24 @@ export default defineConfig({
       '@/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
+  /**
+   *           target: 'http://localhost:1234',
+          changeOrigin: true,
+          rewrite: path => path.replace( privateEnv.VITE_BASE_API, ''),
+   */
   server: {
     port: 3333,
     proxy: {
-      'dev-api': {
+      '/dev-api': {
         target: 'http://localhost:1234',
         changeOrigin: true,
-        rewrite: path => path.replace('dev-api', ''),
+        rewrite: path => path.replace('/dev-api', ''),
       },
     },
   },
   plugins: [
     Vue(),
     Jsx(),
-    Unocss(),
+    UnoCSS(),
   ],
 });

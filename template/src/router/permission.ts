@@ -3,11 +3,14 @@ import type { Router } from 'vue-router';
 import { WHITE_LIST } from './constants';
 import { useRouterStore } from '@/store/modules/router';
 
-function getAuthRouter() {
+async function getAuthRouter() {
 
-  const routerStore = useRouterStore();
+  const routerStore =  useRouterStore();
+  await routerStore.getAuthRoutes();
 
-  routerStore.getAuthRoutes();
+
+  console.log(routerStore.getRoutes);
+
 }
 
 const createRouteGuard = (router: Router) => {
