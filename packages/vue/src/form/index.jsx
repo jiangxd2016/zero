@@ -42,7 +42,6 @@ export const ZeroForm = defineComponent({
           });
         }
 
-        console.log({ name });
         compts.value.push({
           required,
           key: id,
@@ -58,8 +57,6 @@ export const ZeroForm = defineComponent({
           ]
         });
       });
-
-      console.log(compts.value);
     };
 
     return () => (
