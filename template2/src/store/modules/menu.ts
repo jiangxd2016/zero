@@ -43,20 +43,7 @@ const useMenuStore = defineStore('menu', {
       const res = await getRoutesInfo();
       const list = res.data.list;
 
-      const menuList: auth[] = [];
 
-      list.forEach((item) => {
-        const { pid, visible, id } = item;
-        if (!pid && visible) {
-
-          // TODO: 暂时只支持二级菜单
-          const children = list.filter(child => child.pid === id && child.visible);
-          menuList.push({
-            ...item,
-            children
-          });
-        }
-      });
       this.routeList = menuList;
       return menuList;
     },
