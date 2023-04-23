@@ -7,8 +7,13 @@
     "node": ">= 16"
   },
   "scripts": {
-    "dev": "node script.js",
-    "build": "node script.js"
+    "dev": "  tsx scripts/build.ts dev",
+    "build": "pnpm run clean && tsx scripts/build.ts all",
+    "build:types": "pnpm run build:types-cjs && pnpm run build:types-esm",
+    "gen:version": "tsx ./scripts/gen-version.ts",
+    "build:types-cjs": "vue-tsc -p ./src/tsconfig.cjs.json --declaration --emitDeclarationOnly",
+    "build:types-esm": "vue-tsc -p ./src/tsconfig.esm.json --declaration --emitDeclarationOnly",
+    "clean": "rimraf dist"
   },
   "peerDependencies": {
     "async-validator": "^4.2.5",
