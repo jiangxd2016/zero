@@ -3,6 +3,9 @@ import { Table, Button, Space } from '@arco-design/web-vue';
 import { ZeroForm } from '../form/index.jsx';
 import { BTN_CONFIG, rowSelection } from './constants.js';
 import '@arco-design/web-vue/dist/arco.css';
+import { getFields, getList } from '../service/api';
+
+import { useRouter, useRoute } from 'vue-router';
 
 export const ZeroTable = defineComponent({
   name: 'ZeroTable',
@@ -10,6 +13,9 @@ export const ZeroTable = defineComponent({
   setup(_, { slots }) {
 
     const loading = ref(true);
+
+    const router = useRouter();
+    const route = useRoute();
 
     const filedList = ref([]);
     const dataList = ref([]);
@@ -23,40 +29,33 @@ export const ZeroTable = defineComponent({
     const btns = ref([]);
 
     const selections = ref([]);
+    const { actions, views } = route.meta;
 
-    onMounted( () => {
+    onMounted( async () => {
 
-      const model = import.meta.glob('../mock/*.json');
+      const model = await getFields();
+      const tableData = await getList();
 
-      Object.keys(model).forEach((key) => {
+      // fields
 
-        model[key]().then((res) => {
+      filedList.value = model.data.fields;
 
-          if (key.includes('table')) {
+      generateColumns();
+      generateData();
 
-            dataList.value = res.default.list;
+      loading.value = false;
 
-            pagination.value = {
-              total: res.default.total,
-              pageSize: res.default.size,
-            };
-          }
+      /// data
+      dataList.value = tableData.data.list;
 
-          btns.value = res.default.btns?.map((b)=>{
-            return BTN_CONFIG[b];
-          });
-          if (key.includes('resp')) {
+      pagination.value = {
+        total: tableData.data.total,
+        pageSize: tableData.data.size,
+      };
 
-            filedList.value = res.default.fields;
-
-            generateColumns();
-            generateData();
-
-            loading.value = false;
-          }
-        });
-      }
-      );
+      btns.value = tableData.data.btns?.map((b)=>{
+        return BTN_CONFIG[b];
+      });
 
     });
 
@@ -97,17 +96,27 @@ export const ZeroTable = defineComponent({
       selections.value = selection;
     };
 
+    const handleBtnClick = () => {
+      const type = 'edit';
+      console.log(views);
+      const item = views.find(a => a.code === type);
+      console.log(item);
+      // TODO: need support dialog
+      router.push(
+        { path: item.view.archFs, query: { type: 'form', model: 'test', } }
+      );
+    };
     return () => (
       <div class="">
         {
-            <ZeroForm v-else layout="inline" />
+            <ZeroForm layout="inline" />
         }
         <Space style={{ width: '100%' }} class="mb-2">
 
     {
       btns.value?.map((item) => {
         return (
-          <Button type={item.type} status={item.status}>
+          <Button type={item.type} status={item.status} onClick={handleBtnClick}>
             {item.text}
           </Button>
         );

@@ -2,26 +2,27 @@ import { defineComponent, onMounted, ref } from 'vue';
 import { FORM_CONFIG, FORM_JSON_CONFIG } from './constants';
 import '@arco-design/web-vue/dist/arco.css';
 
+import { useRouter, useRoute } from 'vue-router';
 import { Form, FormItem } from '@arco-design/web-vue';
+import { getFields, getList } from '../service/api';
 
 export const ZeroForm = defineComponent({
   name: 'ZeroForm',
+  props: {
+    name: String
+  },
   setup(props, { attrs, slots }) {
 
     const formFields = ref([]);
 
     const compts = ref([]);
 
-    onMounted(() => {
+    onMounted(async () => {
+      const model = await getFields();
+      const tableData = await getList();
+      formFields.value = model.data.fields;
+      generateForm();
 
-      const model = import.meta.glob('../mock/resp.json');
-
-      Object.keys(model).forEach((key) => {
-        model[key]().then((res) => {
-          formFields.value = res.default.fields;
-          generateForm();
-        });
-      });
     });
 
     const generateForm = () => {

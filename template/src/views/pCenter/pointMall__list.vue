@@ -8,8 +8,8 @@
 
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router';
-import ZeroTable from '../../../../packages/vue/src/table/index.jsx';
-import ZeroFrom from '../../../../packages/vue/src/form/index.jsx';
+import { ZeroTable } from '@estjs/zero-vue/src/table/index.jsx';
+import { ZeroForm } from '@estjs/zero-vue/src/form/index.jsx';
 
 const props = defineProps<{ modelValue: boolean }>();
 
@@ -19,5 +19,5 @@ const route = useRoute();
 
 const { id, name, model, actions, type } = route.meta;
 
-const compts = type === 'list' ? ZeroTable : ZeroFrom;
+const compts = type === 'list' ? ZeroTable : ZeroForm;
 </script>

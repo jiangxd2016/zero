@@ -1,65 +1,57 @@
 import { ref } from 'vue';
-import type {ShallowRef} from 'vue';
+import type { ShallowRef, Ref } from 'vue';
 
-import { noop } from "@estjs/tools"
+import { noop } from '@estjs/tools';
 
-import {bus,logger} from "../shared"
+import { bus, logger } from '../shared';
 import {
   CHANGE,
   BLUR,
   FOCUS,
   KEY_PRESS
-} from "./const"
+} from './const';
 
 class form {
 
-  id  =null;
+  id = null;
 
   value: Ref<{}> = ref({});
 
-
   formRef: ShallowRef<HTMLElement | null> = ref(null);
-
 
   onChange: (values: {}) => void = () => { };
   onBlur: (values: {}) => void = () => { };
   onKeyPress: (values: {}) => void = () => { };
   onFocus: (values: {}) => void = () => { };
 
-
   constructor(options = {}) {
-    const { values, onChange, onBlur, onKeyPress, onFocus,id ,formRef} = options as any;
+    const { values, onChange, onBlur, onKeyPress, onFocus, id, formRef } = options as any;
 
     // id
-    this.id = id || `__form__${Math.random().toString(36).slice(2)+Date.now()}`;
-
+    this.id = id || `__form__${Math.random().toString(36).slice(2) + Date.now()}`;
 
     this.value.value = values || {};
 
     // 暂时只支持vue ref形式验证数据
     this.formRef = formRef;
 
-    if(!this.formRef.value){
-      logger.error(`formRef is null`)
+    if (!this.formRef.value) {
+      logger.error('formRef is null');
     }
 
     this.onChange = onChange || noop;
-    this.onBlur = onBlur || noop;;
-    this.onKeyPress = onKeyPress || noop;;
-    this.onFocus = onFocus || noop;;
+    this.onBlur = onBlur || noop;
+    this.onKeyPress = onKeyPress || noop;
+    this.onFocus = onFocus || noop;
 
-
-
-    bus.on(CHANGE,this.onChange)
-    bus.on(BLUR,this.onBlur)
-    bus.on(KEY_PRESS,this.onKeyPress)
-    bus.on(FOCUS,this.onFocus)
-
-
+    bus.on(CHANGE, this.onChange);
+    bus.on(BLUR, this.onBlur);
+    bus.on(KEY_PRESS, this.onKeyPress);
+    bus.on(FOCUS, this.onFocus);
 
   }
 
-  setValues(values:Record<string,any>) {
+  setValues(values: Record<string, any>) {
     this.value.value = values;
   }
 

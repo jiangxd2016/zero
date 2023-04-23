@@ -8,7 +8,7 @@ import table from './mock/list.json' assert { type: 'json' };
 const app = express();
 const port = 1234;
 
-const mock = 'test';
+const mock = '/test';
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

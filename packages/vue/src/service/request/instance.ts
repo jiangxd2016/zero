@@ -1,7 +1,6 @@
 import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { Message, Modal } from '@arco-design/web-vue';
-import { useToken } from './../../composables/token';
 import { REFRESH_TOKEN_CODE, REQUEST_ERROR_MSG } from './constants';
 
 /** 后端接口返回的数据结构配置 */
@@ -36,7 +35,9 @@ export default class CustomAxiosInstance {
     }
   ) {
     this.backendConfig = backendConfig;
-    this.instance = request.create(axiosConfig);
+    const baseUrl = new URL(location.href).origin;
+    axiosConfig.baseURL = baseUrl;
+    this.instance = axios.create(axiosConfig);
     this.setInterceptor();
   }
 
@@ -44,8 +45,6 @@ export default class CustomAxiosInstance {
   setInterceptor() {
     this.instance.interceptors.request.use(
       async (config) => {
-        const tk: string = useToken.get();
-        if (tk) { config.headers['Authorization'] = 'Bearer ' + tk; }
         return config;
       },
     );
@@ -108,7 +107,6 @@ export default class CustomAxiosInstance {
         // }
 
         if (status === REFRESH_TOKEN_CODE) {
-          useToken.remove();
           Modal.confirm({
             title: '登录失效',
             content: REQUEST_ERROR_MSG[status],

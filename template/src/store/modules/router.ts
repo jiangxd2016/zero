@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import CloneDeep from 'lodash/cloneDeep';
 import { getRoutesInfo } from '@/service/api/menu';
 import { getComponent } from '@/utils/views';
 
@@ -44,6 +45,7 @@ export const useRouterStore = defineStore('router', {
             const other = actions.filter((child) => {
               return !ROUTE_TYPE.includes(child.type);
             });
+            console.log('pages', pages);
 
             const viewList = pages.sort((a, b) => {
               return a.sort - b.sort;
@@ -53,6 +55,7 @@ export const useRouterStore = defineStore('router', {
 
               actionItem.meta = {
                 actions: other,
+                views: CloneDeep(pages),
                 ... actionItem.view,
               };
               return actionItem;
