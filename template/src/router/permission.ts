@@ -2,23 +2,20 @@ import NProgress from 'nprogress';
 import type { Router } from 'vue-router';
 import { WHITE_LIST } from './constants';
 import { useRouterStore } from '@/store/modules/router';
-
-async function getAuthRouter() {
-
-  const routerStore =  useRouterStore();
-  await routerStore.getAuthRoutes();
-
-  return   routerStore.getRoutes;
-
-}
+import { setRouteEmitter } from '@/utils/route-listener';
 
 const createRouteGuard = (router: Router) => {
-
+  let routerInit = false;
   router.beforeEach(async (to, from, next) => {
     if (to.path !== from.path) {
       NProgress.start();
     }
+    setRouteEmitter(to);
+    const routerStore = useRouterStore();
 
+    if (!routerStore.getRoutes || !routerStore.getRoutes.length) {
+      await routerStore.getAuthRoutes();
+    }
     // const token = useToken.get() || 'NOTOKEN';
     const token = 'NOTOKEN';
 
@@ -35,11 +32,29 @@ const createRouteGuard = (router: Router) => {
       }
       return;
     }
-   const authRouters = await  getAuthRouter();
 
-   router.addRoute(authRouters);
+    if (!routerInit) {
+      router.addRoute({
+        name: 'root',
+        path: '/',
+        component: () => import('@/layout/default-layout.vue'),
+        children: [
+          ...routerStore.getRoutes,
+        ],
+      });
+      routerInit = true;
+    }
+
+    const resolved = router.resolve({ path: to.path });
+
+    if (to.name === 'notFound') {
+      next(resolved);
+      return;
+    }
+
 
     next();
+
   });
 
   router.afterEach(() => {

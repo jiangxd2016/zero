@@ -1,12 +1,13 @@
-import type { Logger } from "@estjs/tools";
+import type { Logger } from '@estjs/tools';
+
 class eventBus {
   subs = new Map();
   Logger: Logger | null = null;
   instance: eventBus | null = null;
-  constructor(logger:Logger|null = null) {
+  constructor(logger: Logger | null = null) {
     this.Logger = logger;
-    this.Logger?.info('eventBus init')
-    return this.instance ||= new eventBus();
+    this.Logger?.info('eventBus init');
+    return this.instance ||= this;
   }
 
   on(type: string, callback: Function) {

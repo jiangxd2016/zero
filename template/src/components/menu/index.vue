@@ -57,7 +57,7 @@ export default defineComponent({
 
     };
     listenerRouteChange((newRoute) => {
-      const key = newRoute.name as string;
+      const key = newRoute.path as string;
       selectedKey.value = [key];
     }, true);
 
@@ -66,12 +66,13 @@ export default defineComponent({
         return _route.map((element) => {
 
           const icon = element?.meta?.icon ? `<i class="i-carbon-3d-print-mesh"/>` : '';
+
           if (element.children) {
             return (
               <a-sub-menu
-                key={element?.id}
+                key={element.path}
                 v-slots={{
-                  icon: () => h(compile(icon)),
+                  icon: () => <i class="i-carbon-accessibility-color-filled"></i>,
                   title: () => element.name,
                 }}
               >
@@ -82,12 +83,12 @@ export default defineComponent({
 
           return (
             <a-menu-item
-              key={element.id}
+              key={element.path}
               onClick={() => goto(element)}
               v-slots={
                 icon !== ''
                   ? {
-                    icon: () => h(compile(icon)),
+                    icon: () => <i class="i-carbon-accessibility-color-filled"></i>,
                     title: () => h(compile(element?.name || '')),
                   }
                   : {
@@ -121,7 +122,7 @@ export default defineComponent({
   },
 });
 </script>
-
+<!--
 <style lang="scss" scoped>
 :deep(.arco-menu-inner) {
   .arco-menu-inline-header {
@@ -135,4 +136,4 @@ export default defineComponent({
     }
   }
 }
-</style>
+</style> -->

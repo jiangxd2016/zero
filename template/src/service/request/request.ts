@@ -224,10 +224,16 @@ async function getRequestResponse(params: {
 
   let res: any;
   if (method === 'get' || method === 'delete') {
+
+    const nativeUrl = new URL(location.href);
+
+    const customConfig = config || {};
+    customConfig.baseURL = nativeUrl.origin + '/dev-api';
+
     const urls = url + (data ? `?${parseParams(data)}` : '');
-    res = await instance[method](urls, config);
+    res = await instance[method](urls, customConfig);
   } else {
-    res = await instance[method](url, data, config);
+    res = await instance[method](url, data, customConfig);
   }
   return res;
 }
