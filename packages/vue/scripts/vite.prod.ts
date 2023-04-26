@@ -41,7 +41,7 @@ const config: InlineConfig = {
         },
       ],
 
-      external: ['vue', 'dayjs', 'async-validator', 'number-precision', 'eurus-icons-vue'],
+      external: ['vue', 'dayjs', 'async-validator', 'number-precision', '"@arco-design/web-vue'],
     },
     lib: {
       entry: 'src/index.ts',

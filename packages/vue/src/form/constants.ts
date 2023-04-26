@@ -60,7 +60,7 @@ export const FORM_CONFIG = {
     value: '',
     props: ['disabled', 'accept', 'default-file-list', 'action', 'accept', 'headers', 'auto-upload', 'show-file-list', 'auto-upload', 'draggable']
   }
-};
+} as const;
 
 export const FORM_JSON_CONFIG = {
   NUMBER: 'INPUTNUMBER',
@@ -68,4 +68,4 @@ export const FORM_JSON_CONFIG = {
   BOOLEAN: 'SWITCH',
   DATETIME: 'DATEPICKER',
   SELECTION: 'SELECT',
-};
+} as const;

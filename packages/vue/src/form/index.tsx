@@ -2,7 +2,6 @@ import { defineComponent, onMounted, ref } from 'vue';
 import { FORM_CONFIG, FORM_JSON_CONFIG } from './constants';
 import '@arco-design/web-vue/dist/arco.css';
 
-import { useRouter, useRoute } from 'vue-router';
 import { Form, FormItem } from '@arco-design/web-vue';
 import { getFields, getList } from '../service/api';
 

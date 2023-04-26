@@ -3,6 +3,7 @@ import type { ShallowRef, Ref } from 'vue';
 
 import { noop } from '@estjs/tools';
 
+import type { FormInstance } from '@arco-design/web-vue';
 import { bus, logger } from '../shared';
 import {
   CHANGE,
@@ -17,7 +18,7 @@ class form {
 
   value: Ref<{}> = ref({});
 
-  formRef: ShallowRef<HTMLElement | null> = ref(null);
+  formRef: ShallowRef<FormInstance | null> = ref(null);
 
   onChange: (values: {}) => void = () => { };
   onBlur: (values: {}) => void = () => { };
@@ -56,10 +57,19 @@ class form {
   }
 
   submit() {
-    // this.formRef.value?.submit();
+    this.formRef.value?.validate().then((valid) => {
+      if (valid) {
+        console.warn('submit error!');
+        return false;
+      }
+      console.log('submit start');
+
+    });
   }
 
   destroyed() {
 
   }
 }
+
+export default form;

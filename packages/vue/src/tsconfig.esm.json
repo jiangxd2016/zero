@@ -3,8 +3,8 @@
   "compilerOptions": {
     "rootDir": "../src",
     "outDir": "../dist/es",
-    "module": "ES6",
-    "target": "ES6"
+    "module": "es2020",
+    "target": "es2020"
   },
   "rootDir": "./src",
   "exclude": [

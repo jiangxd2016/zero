@@ -4,7 +4,7 @@
     "rootDir": "../src",
     "outDir": "../dist/lib",
     "module": "CommonJS",
-    "target": "ES6"
+    "target": "es2020"
   },
   "rootDir": "./src",
   "exclude": [

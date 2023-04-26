@@ -4,7 +4,6 @@ import { ZeroForm } from '../form/index.jsx';
 import { BTN_CONFIG, rowSelection } from './constants.js';
 import '@arco-design/web-vue/dist/arco.css';
 import { getFields, getList } from '../service/api';
-
 import { useRouter, useRoute } from 'vue-router';
 
 export const ZeroTable = defineComponent({
